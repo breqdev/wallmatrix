@@ -105,3 +105,5 @@ class MBTA(Source):
             canvas.paste(line_canvas, (0, i*8, 32, i*8+8))
 
         return canvas
+
+__matrix_source__ = MBTA

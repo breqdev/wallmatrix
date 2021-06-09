@@ -69,3 +69,5 @@ class Weather(Source):
         canvas = ImageEnhance.Brightness(canvas).enhance(0.5)
 
         return canvas
+
+__matrix_source__ = Weather

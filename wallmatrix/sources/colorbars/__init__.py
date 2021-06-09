@@ -10,3 +10,6 @@ class Colorbars(Source):
 
     def get_image(self):
         return self.bars
+
+
+__matrix_source__ = Colorbars

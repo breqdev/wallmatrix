@@ -20,18 +20,13 @@ elif args.driver == "fake":
 
 driver = Driver()
 driver.setup()
+driver.current_source = driver.sources[0]
 
 # from wallmatrix.sources.colorbars import Colorbars as Source
 # from wallmatrix.sources.weather import Weather as Source
-from wallmatrix.sources.mbta import MBTA as Source
-
-source = Source()
-source.setup()
-
-driver.sources.append(source)
-driver.current_source = source
+# from wallmatrix.sources.mbta import MBTA as Source
 
 try:
     driver.loop()
 finally:
-    source.teardown()
+    driver.teardown()
