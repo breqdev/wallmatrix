@@ -2,7 +2,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from wallmatrix.sources.source import Source
+from wallmatrix.sources import Source
 
 class Colorbars(Source):
     def setup(self):

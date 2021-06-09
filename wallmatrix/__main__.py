@@ -21,7 +21,9 @@ elif args.driver == "fake":
 driver = Driver()
 driver.setup()
 
-from wallmatrix.sources.colorbars import Colorbars as Source
+# from wallmatrix.sources.colorbars import Colorbars as Source
+# from wallmatrix.sources.weather import Weather as Source
+from wallmatrix.sources.mbta import MBTA as Source
 
 source = Source()
 source.setup()
