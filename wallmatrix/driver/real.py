@@ -1,10 +1,6 @@
 from PIL import Image
 
-try:
-    from rgbmatrix import RGBMatrix, RGBMatrixOptions
-except ImportError:
-    RGBMatrix = None
-    RGBMatrixOptions = None
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
 from wallmatrix.driver import MatrixDriver
 

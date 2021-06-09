@@ -2,7 +2,7 @@ import threading
 
 from flask import Flask, request, render_template, jsonify
 
-from wallmatrix.driver.fake import FakeMatrixDriver as Driver
+from wallmatrix.driver.default import Driver
 
 
 driver = Driver()

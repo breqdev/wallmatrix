@@ -1,11 +1,7 @@
 import threading
 from PIL import Image
-
-try:
-    import tkinter as tk
-    from PIL import ImageTk
-except ImportError:
-    tk = None
+import tkinter as tk
+from PIL import ImageTk
 
 
 from wallmatrix.driver import MatrixDriver
