@@ -1,4 +1,5 @@
 import time
+import os
 import importlib
 from pathlib import Path
 
@@ -9,7 +10,7 @@ class MatrixDriver:
 
     def __init__(self):
         self.sources = {}
-        self.current_source = None
+        self.current_source = os.getenv("DEFAULT_SOURCE")
 
         self.load_sources()
 
