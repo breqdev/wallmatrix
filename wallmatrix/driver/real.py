@@ -21,4 +21,6 @@ class RealMatrixDriver(MatrixDriver):
         self.matrix.SetImage(self.image.convert("RGB"))
 
     def teardown(self):
-        pass
+        super().teardown()
+
+        self.matrix.Clear()

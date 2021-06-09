@@ -8,7 +8,7 @@ class MatrixDriver:
     INTERVAL = 10
 
     def __init__(self):
-        self.sources = []
+        self.sources = {}
         self.current_source = None
 
         self.load_sources()
@@ -20,26 +20,27 @@ class MatrixDriver:
             if child.name == "__init__.py":
                 continue
 
-            module = None
+            import_name = None
             if child.is_dir():
                 if (child / "__init__.py").exists():
-                    module = importlib.import_module(
-                        "wallmatrix.sources." + child.name)
+                    import_name = "wallmatrix.sources." + child.name
 
             if child.is_file():
                 if child.name.endswith(".py"):
-                    module = importlib.import_module(
+                    import_name = (
                         "wallmatrix.sources." + child.name[:-len(".py")])
 
-            if not module:
+            if not import_name:
                 continue
+
+            module = importlib.import_module(import_name)
 
             source = getattr(module, "__matrix_source__", None)
 
             if source:
                 source = source()
 
-                self.sources.append(source)
+                self.sources[import_name] = source
 
                 source.setup()
 
@@ -47,7 +48,7 @@ class MatrixDriver:
         if not self.current_source:
             return
 
-        self.image = self.current_source.get_image()
+        self.image = self.sources[self.current_source].get_image()
 
         self.update_image()
 
@@ -63,5 +64,5 @@ class MatrixDriver:
             time.sleep(max(0, self.INTERVAL + start_time - time.time()))
 
     def teardown(self):
-        for source in self.sources:
+        for source in self.sources.values():
             source.teardown()
