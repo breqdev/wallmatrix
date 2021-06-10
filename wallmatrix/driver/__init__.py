@@ -1,6 +1,7 @@
 import time
 import os
 import importlib
+import traceback
 from pathlib import Path
 
 import wallmatrix
@@ -49,7 +50,10 @@ class MatrixDriver:
         if not self.current_source:
             return
 
-        self.image = self.sources[self.current_source].get_image()
+        try:
+            self.image = self.sources[self.current_source].get_image()
+        except Exception:
+            traceback.print_exc()
 
         self.update_image()
 
