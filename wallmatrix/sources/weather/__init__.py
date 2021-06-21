@@ -1,3 +1,4 @@
+import os
 import requests
 import datetime
 
@@ -8,7 +9,7 @@ from PIL import Image, ImageDraw, ImageEnhance
 from wallmatrix.fonts import font, small_font
 from wallmatrix.sources import Source
 
-api_key = "ff8dabc1c0682b496d7ddcf3f0f5f5e5"
+api_key = os.environ["OPENWEATHERMAP_KEY"]
 base_url = "https://api.openweathermap.org/data/2.5/weather?"
 zip_code = "04074"
 
