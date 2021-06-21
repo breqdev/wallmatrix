@@ -3,11 +3,10 @@ import threading
 from flask import Flask, request, render_template, jsonify
 
 from dotenv import load_dotenv
+load_dotenv()
+
 
 from wallmatrix.driver.default import Driver
-
-
-load_dotenv()
 
 
 driver = Driver()
