@@ -90,7 +90,7 @@ class Weather(Source):
         icon_code = response["weather"][0]["icon"]
 
         is_daytime = (icon_code[-1] == "d")
-        icon_name = self.get_icon(response["weather"][0]["id"])
+        icon_name = self.get_icon(response["weather"][0]["id"], is_daytime)
 
         icon = Image.open(icon_path / f"{icon_name}.png")
         icon.thumbnail((16, 16), Image.ANTIALIAS)
