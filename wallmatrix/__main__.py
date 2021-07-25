@@ -20,7 +20,7 @@ elif args.driver == "fake":
 
 driver = Driver()
 driver.setup()
-driver.current_source = driver.sources[0]
+driver.current_source = next(iter(driver.sources))
 
 # from wallmatrix.sources.colorbars import Colorbars as Source
 # from wallmatrix.sources.weather import Weather as Source
