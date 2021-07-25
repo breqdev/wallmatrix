@@ -38,6 +38,7 @@ class Crypto(Source):
         price_data = coin_data["quote"]["USD"]
 
         self.cache = price_data
+        self.last_cache_update = time.time()
 
     def get_cached_coin_data(self):
         if time.time() - self.last_cache_update > 300:
