@@ -83,16 +83,16 @@ class MBTA(Source):
         draw.rectangle((3, 4, 3, 5), fill=(196, 196, 196))
 
         # Display the time remaining
-        draw.text((8, 1), str(wait_time), font=font, fill="#"+line["color"])
+        draw.text((9, 1), str(wait_time), font=font, fill="#"+line["color"])
 
         # Draw the M manually (it's extra wide)
-        draw.rectangle((18, 3, 21, 3), fill="#"+line["color"])
-        draw.rectangle((18, 4, 18, 6), fill="#"+line["color"])
-        draw.rectangle((20, 4, 20, 6), fill="#"+line["color"])
-        draw.rectangle((22, 4, 22, 6), fill="#"+line["color"])
+        draw.rectangle((19, 3, 22, 3), fill="#"+line["color"])
+        draw.rectangle((19, 4, 19, 6), fill="#"+line["color"])
+        draw.rectangle((21, 4, 21, 6), fill="#"+line["color"])
+        draw.rectangle((23, 4, 23, 6), fill="#"+line["color"])
 
         # Draw the rest of "min"
-        draw.text((24, 2), "in", font=small_font, fill="#"+line["color"])
+        draw.text((25, 2), "in", font=small_font, fill="#"+line["color"])
 
         return canvas
 
