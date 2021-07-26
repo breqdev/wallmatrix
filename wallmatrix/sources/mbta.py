@@ -8,6 +8,8 @@ from wallmatrix.sources import Source
 
 
 class MBTA(Source):
+    SOURCE_NAME = "MBTA North from NEU"
+
     LINES = [
         {
             "color": "ED8B00",

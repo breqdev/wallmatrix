@@ -26,7 +26,10 @@ def sources():
     if request.method == "GET":
         return jsonify({
             "current": driver.current_source,
-            "all": list(driver.sources.keys())
+            "all": {
+                import_name: source.SOURCE_NAME
+                for import_name, source in driver.sources.items()
+            }
         })
     elif request.method == "POST":
         source_name = request.json.get("source")

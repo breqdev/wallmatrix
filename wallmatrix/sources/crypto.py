@@ -16,6 +16,7 @@ coin = "ETH"
 
 
 class Crypto(Source):
+    SOURCE_NAME = "ETH Price Change"
     CACHE_TTL = 300
 
     def get_data(self):

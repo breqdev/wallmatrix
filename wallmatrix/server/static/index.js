@@ -4,10 +4,10 @@ async function fetch_sources() {
     let data = await fetch("/sources")
     let sources = await data.json()
 
-    let options = sources.all.map(source => {
+    let options = Object.entries(sources.all).map(([importName, friendlyName]) => {
         let option = document.createElement("option")
-        option.value = source
-        option.innerHTML = source
+        option.value = importName
+        option.innerHTML = friendlyName
         return option
     })
 

@@ -24,6 +24,8 @@ def k_to_f(k):
 
 
 class Weather(Source):
+    SOURCE_NAME = "Local Weather Conditions"
+
     DAYTIME = {
         "cloud": [803],
         "cloud_moon": [],
