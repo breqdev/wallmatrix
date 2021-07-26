@@ -1,0 +1,46 @@
+body {
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+select {
+    font-size: 1.2rem;
+}
+
+hr {
+    align-self: stretch;
+    margin: 1rem 0;
+}
+
+.flash-box {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+input[type="text"] {
+    font-size: 1.2rem;
+    flex-grow: 1;
+}
+
+button {
+    font-size: 1.2rem;
+}
+
+a, a:visited {
+    color: #00f
+}

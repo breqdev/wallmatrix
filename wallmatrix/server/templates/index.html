@@ -3,14 +3,23 @@
 {% block body %}
 <h1>Matrix Control</h1>
 
+<p>Choose Data Source</p>
+
 <select name="sources" id="sources">
 </select>
 
 <hr />
 
-<input type="text" id="message" />
-<button id="flash">flash</button>
+<p>Flash Message</p>
 
+<div class="flash-box">
+    <input type="text" id="message" />
+    <button id="flash">Flash</button>
+</div>
+
+<hr />
+
+<small>as always, made with 🖥 and ❤️ by <a href="https://breq.dev/">breq</a>.</small>
 
 <script src="/static/index.js" type="module"></script>
 {% endblock %}
