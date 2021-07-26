@@ -15,7 +15,7 @@ async function fetchSources() {
         return option
     })
 
-    dropdown.replaceChildren(...options)
+    dropdown.append(...options)
     dropdown.value = sources.current
 }
 
