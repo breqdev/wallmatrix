@@ -111,8 +111,11 @@ class Weather(Source):
             hour_digit = 12
 
         # Draw the first digit of the hour
+        # We draw the 1 manually and condense it a bit
+        # so that we can fit all the text
         if hour_digit >= 10:
             draw.line((16, 9, 16, 13), fill=(255, 255, 255))
+            draw.point((15, 10), fill=(255, 255, 255))
 
         # Draw the last digit of the hour
         draw.text((18, 9), str(hour_digit)[-1], font=small_font, fill=(255, 255, 255))
