@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+from wallmatrix.driver import DriverEvent
 from wallmatrix.driver.default import Driver
 
 
@@ -31,7 +32,7 @@ def sources():
         source_name = request.json.get("source")
 
         if source_name in driver.sources:
-            driver.current_source = source_name
+            driver.message_queue.put(DriverEvent(action="SOURCE_CHANGED", source=source_name))
             return "OK", 200
         else:
             return "Source not found", 404

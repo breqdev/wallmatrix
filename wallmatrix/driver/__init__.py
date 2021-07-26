@@ -3,9 +3,17 @@ import os
 import importlib
 import traceback
 import queue
+import dataclasses
 from pathlib import Path
 
 import wallmatrix
+
+
+@dataclasses.dataclass
+class DriverEvent:
+    action: str
+    source: str = None
+
 
 class MatrixDriver:
     INTERVAL = 10
@@ -73,7 +81,11 @@ class MatrixDriver:
             except queue.Empty:
                 pass
             else:
-                pass
+                if event.action == "SOURCE_CHANGED":
+                    self.current_source = event.source
+                    self.refresh()
+                else:
+                    print("Unrecognized action " + event.action)
 
             if time.time() - self.last_refresh > 1:
                 self.refresh()
