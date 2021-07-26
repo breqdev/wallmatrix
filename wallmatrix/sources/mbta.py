@@ -97,7 +97,7 @@ class MBTA(Source):
         return canvas
 
 
-    def get_image(self):
+    def get_data(self):
         canvas = Image.new("RGB", (32, 16))
 
         for i, line in enumerate(self.LINES):
@@ -105,5 +105,9 @@ class MBTA(Source):
             canvas.paste(line_canvas, (0, i*8, 32, i*8+8))
 
         return canvas
+
+    def get_image(self, data):
+        # We cache the entire canvas
+        return data
 
 __matrix_source__ = MBTA

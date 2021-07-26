@@ -2,6 +2,7 @@ import time
 import os
 import importlib
 import traceback
+import queue
 from pathlib import Path
 
 import wallmatrix
@@ -14,6 +15,9 @@ class MatrixDriver:
         self.current_source = os.getenv("DEFAULT_SOURCE")
 
         self.load_sources()
+
+        self.message_queue = queue.Queue()
+        self.last_refresh = 0
 
     def load_sources(self):
         source_path = Path(wallmatrix.__file__).parent / "sources"
@@ -47,11 +51,13 @@ class MatrixDriver:
                 source.setup()
 
     def refresh(self):
+        self.last_refresh = time.time()
+
         if not self.current_source:
             return
 
         try:
-            self.image = self.sources[self.current_source].get_image()
+            self.image = self.sources[self.current_source].get_data_and_image()
         except Exception:
             traceback.print_exc()
 
@@ -62,11 +68,15 @@ class MatrixDriver:
 
     def loop(self):
         while True:
-            start_time = time.time()
+            try:
+                event = self.message_queue.get(block=False)
+            except queue.Empty:
+                pass
+            else:
+                pass
 
-            self.refresh()
-
-            time.sleep(max(0, self.INTERVAL + start_time - time.time()))
+            if time.time() - self.last_refresh > 1:
+                self.refresh()
 
     def teardown(self):
         for source in self.sources.values():

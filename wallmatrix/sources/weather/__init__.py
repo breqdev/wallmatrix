@@ -1,6 +1,7 @@
 import os
 import requests
 import datetime
+import time
 
 from pathlib import Path
 
@@ -80,17 +81,18 @@ class Weather(Source):
             if code in codes:
                 return icon
 
-    def get_image(self):
+    def get_data(self):
+        return requests.get(url).json()
+
+    def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
 
-        response = requests.get(url).json()
+        temperature = int(k_to_f(data["main"]["temp"]))
 
-        temperature = int(k_to_f(response["main"]["temp"]))
-
-        icon_code = response["weather"][0]["icon"]
+        icon_code = data["weather"][0]["icon"]
 
         is_daytime = (icon_code[-1] == "d")
-        icon_name = self.get_icon(response["weather"][0]["id"], is_daytime)
+        icon_name = self.get_icon(data["weather"][0]["id"], is_daytime)
 
         icon = Image.open(icon_path / f"{icon_name}.png")
         icon.thumbnail((16, 16), Image.ANTIALIAS)

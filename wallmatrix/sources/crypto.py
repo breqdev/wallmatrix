@@ -16,13 +16,9 @@ coin = "ETH"
 
 
 class Crypto(Source):
-    def __init__(self):
-        super().__init__()
+    CACHE_TTL = 300
 
-        self.get_raw_coin_data()
-        self.last_cache_update = time.time()
-
-    def get_raw_coin_data(self):
+    def get_data(self):
         url = base_url + "cryptocurrency/quotes/latest"
 
         response = requests.get(url, params={
@@ -35,16 +31,7 @@ class Crypto(Source):
 
         coin_data = data["data"][coin]
 
-        price_data = coin_data["quote"]["USD"]
-
-        self.cache = price_data
-        self.last_cache_update = time.time()
-
-    def get_cached_coin_data(self):
-        if time.time() - self.last_cache_update > 300:
-            self.get_raw_coin_data()
-
-        return self.cache
+        return coin_data["quote"]["USD"]
 
     def draw_arrow(self, draw, x, y, color, inverted=False):
         if not inverted:
@@ -59,15 +46,13 @@ class Crypto(Source):
             draw.point((x+4, y+2), fill=color)
 
 
-    def get_image(self):
+    def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
 
         draw = ImageDraw.Draw(canvas)
 
-        price_data = self.get_cached_coin_data()
-
         # Draw the main price
-        price = int(round(price_data["price"]))
+        price = int(round(data["price"]))
         draw.text(
             (1, 1), f"${price}", font=font, fill=(255, 255, 255))
 
@@ -75,7 +60,7 @@ class Crypto(Source):
         draw.text((1, 10), coin, font=small_font, fill=(127, 127, 127))
 
         # Draw the coin price change
-        price_change = int(round(price_data["percent_change_24h"]))
+        price_change = int(round(data["percent_change_24h"]))
 
         if price_change > 0:
             color = (0, 255, 0)

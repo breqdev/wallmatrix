@@ -8,7 +8,7 @@ class Colorbars(Source):
     def setup(self):
         self.bars = Image.open(Path(__file__).parent / "colorbars.png")
 
-    def get_image(self):
+    def get_image(self, data):
         return self.bars
 
 
