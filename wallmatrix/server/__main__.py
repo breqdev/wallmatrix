@@ -41,6 +41,13 @@ def sources():
             return "Source not found", 404
 
 
+@app.route("/flash", methods=["POST"])
+def flash():
+    message = request.json.get("message")
+    driver.message_queue.put(DriverEvent(action="FLASH_MESSAGE", message=message))
+    return "OK", 200
+
+
 app_thread = threading.Thread(target=app.run, kwargs={"threaded": False})
 app_thread.start()
 

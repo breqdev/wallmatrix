@@ -1,6 +1,10 @@
 let dropdown = document.getElementById("sources")
 
-async function fetch_sources() {
+let messageInput = document.getElementById("message")
+let flashButton = document.getElementById("flash")
+
+
+async function fetchSources() {
     let data = await fetch("/sources")
     let sources = await data.json()
 
@@ -15,9 +19,9 @@ async function fetch_sources() {
     dropdown.value = sources.current
 }
 
-fetch_sources()
+fetchSources()
 
-async function handle_source_change() {
+async function handleSourceChange() {
     let source = dropdown.value
 
     await fetch("/sources", {
@@ -29,4 +33,18 @@ async function handle_source_change() {
     })
 }
 
-dropdown.addEventListener("change", handle_source_change)
+dropdown.addEventListener("change", handleSourceChange)
+
+async function handleFlashMessage() {
+    let message = messageInput.value
+
+    await fetch("/flash", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({message})
+    })
+}
+
+flashButton.addEventListener("click", handleFlashMessage)

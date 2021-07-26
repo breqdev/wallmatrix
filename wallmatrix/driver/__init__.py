@@ -6,6 +6,10 @@ import queue
 import dataclasses
 from pathlib import Path
 
+from PIL import Image, ImageDraw
+
+from wallmatrix.fonts import large_font
+
 import wallmatrix
 
 
@@ -13,6 +17,7 @@ import wallmatrix
 class DriverEvent:
     action: str
     source: str = None
+    message: str = None
 
 
 class MatrixDriver:
@@ -71,6 +76,19 @@ class MatrixDriver:
 
         self.update_image()
 
+    def flash_message(self, message):
+        canvas = Image.new("RGB", (32, 16))
+        draw = ImageDraw.Draw(canvas)
+
+        width = large_font.getsize(message)[0]
+
+        for x_offset in range(32, -width, -1):
+            draw.rectangle((0, 0, 32, 16), fill=(0, 0, 0))
+            draw.text((x_offset, 1), message, font=large_font)
+            self.image = canvas
+            self.update_image()
+            time.sleep(0.1)
+
     def update_image(self):
         pass
 
@@ -84,6 +102,8 @@ class MatrixDriver:
                 if event.action == "SOURCE_CHANGED":
                     self.current_source = event.source
                     self.refresh()
+                elif event.action == "FLASH_MESSAGE":
+                    self.flash_message(event.message)
                 else:
                     print("Unrecognized action " + event.action)
 
