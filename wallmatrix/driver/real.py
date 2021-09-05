@@ -16,11 +16,12 @@ class RealMatrixDriver(MatrixDriver):
         self.matrix = RGBMatrix(options=self.options)
 
     def update_image(self):
-        image = self.image.convert("RGB")
         if os.environ.get("INVERT"):
-            image = image.rotate(180)
+            image = self.image.rotate(180)
+        else:
+            image = self.image.rotate(0)
 
-        self.matrix.SetImage(image)
+        self.matrix.SetImage(image.convert("RGB"))
 
     def teardown(self):
         super().teardown()

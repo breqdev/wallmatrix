@@ -12,7 +12,7 @@ from wallmatrix.sources import Source
 
 api_key = os.environ["OPENWEATHERMAP_KEY"]
 base_url = "https://api.openweathermap.org/data/2.5/weather?"
-zip_code = "04074"
+zip_code = os.getenv("ZIP_CODE") or "04074"
 
 url = base_url + "appid=" + api_key + "&zip=" + zip_code
 
