@@ -15,7 +15,7 @@ class MBTA(Source):
             "color": "ED8B00",
             "line": "line-Orange",
             "route": "Orange",
-            "origin": "place-masta", # Massachusets Ave
+            "origin": "place-rugg", # Ruggles
             "destination": "place-haecl", # Haymarket
             "direction": 1, # North
             "walk-min": 10
@@ -24,10 +24,10 @@ class MBTA(Source):
             "color": "00843D",
             "line": "line-Green",
             "route": "Green-E",
-            "origin": "place-symcl", # Symphony
+            "origin": "place-nuniv", # NEU
             "destination": "place-haecl", # Haymarket
             "direction": 1, # East
-            "walk-min": 5
+            "walk-min": 10
         }
     ]
 
