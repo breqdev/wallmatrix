@@ -18,7 +18,7 @@ class MBTA(Source):
             "origin": "place-rugg", # Ruggles
             "destination": "place-haecl", # Haymarket
             "direction": 1, # North
-            "walk-min": 10
+            "walk-min": 4
         },
         {
             "color": "00843D",
