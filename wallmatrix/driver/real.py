@@ -4,7 +4,7 @@ from PIL import Image
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
-from wallmatrix.driver import MatrixDriver
+from wallmatrix.driver.driver import MatrixDriver
 
 
 class RealMatrixDriver(MatrixDriver):

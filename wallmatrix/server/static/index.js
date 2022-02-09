@@ -1,50 +1,57 @@
-let dropdown = document.getElementById("sources")
+let dropdown = document.getElementById("sources");
 
-let messageInput = document.getElementById("message")
-let flashButton = document.getElementById("flash")
-
+let messageInput = document.getElementById("message");
+let flashButton = document.getElementById("flash");
 
 async function fetchSources() {
-    let data = await fetch("/sources")
-    let sources = await data.json()
+  let data = await fetch("/sources");
+  let sources = await data.json();
 
-    let options = Object.entries(sources.all).map(([importName, friendlyName]) => {
-        let option = document.createElement("option")
-        option.value = importName
-        option.innerHTML = friendlyName
-        return option
-    })
+  let options = Object.entries(sources.all).map(
+    ([importName, friendlyName]) => {
+      let option = document.createElement("option");
+      option.value = importName;
+      option.innerHTML = friendlyName;
+      return option;
+    }
+  );
 
-    dropdown.append(...options)
-    dropdown.value = sources.current
+  dropdown.append(...options);
+  dropdown.value = sources.current;
 }
 
-fetchSources()
+fetchSources();
 
 async function handleSourceChange() {
-    let source = dropdown.value
+  let source = dropdown.value;
 
-    await fetch("/sources", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({source})
-    })
+  await fetch("/sources", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ source }),
+  });
 }
 
-dropdown.addEventListener("change", handleSourceChange)
+dropdown.addEventListener("change", handleSourceChange);
 
 async function handleFlashMessage() {
-    let message = messageInput.value
+  let message = messageInput.value;
 
-    await fetch("/flash", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({message})
-    })
+  await fetch("/flash", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message }),
+  });
 }
 
-flashButton.addEventListener("click", handleFlashMessage)
+flashButton.addEventListener("click", handleFlashMessage);
+
+setInterval(() => {
+  const preview = document.getElementById("preview");
+
+  preview.src = `/preview?t=${new Date().getTime()}}`;
+}, 500);

@@ -1,12 +1,13 @@
 import threading
+import io
 
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response
 
 from dotenv import load_dotenv
 load_dotenv()
 
 
-from wallmatrix.driver import DriverEvent
+from wallmatrix.driver.driver import DriverEvent
 from wallmatrix.driver.default import Driver
 
 
@@ -46,6 +47,12 @@ def flash():
     message = request.json.get("message")
     driver.message_queue.put(DriverEvent(action="FLASH_MESSAGE", message=message))
     return "OK", 200
+
+@app.route("/preview")
+def preview():
+    buf = io.BytesIO()
+    driver.image.save(buf, format="PNG")
+    return Response(buf.getvalue(), mimetype="image/png")
 
 
 app_thread = threading.Thread(target=app.run, kwargs={"threaded": False})

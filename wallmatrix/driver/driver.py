@@ -31,7 +31,7 @@ class MatrixDriver:
 
         self.message_queue = queue.Queue()
         self.last_refresh = 0
-    
+
     def setup(self):
         pass
 

@@ -1,25 +1,28 @@
-{% extends "base.html" %}
-
-{% block body %}
+{% extends "base.html" %} {% block body %}
 <h1>Matrix Control</h1>
 
 <p>Choose Data Source</p>
 
-<select name="sources" id="sources">
-</select>
+<select name="sources" id="sources"></select>
 
 <hr />
 
 <p>Flash Message</p>
 
 <div class="flash-box">
-    <input type="text" id="message" />
-    <button id="flash">Flash</button>
+  <input type="text" id="message" />
+  <button id="flash">Flash</button>
 </div>
 
 <hr />
 
-<small>as always, made with 🖥 and ❤️ by <a href="https://breq.dev/">breq</a>.</small>
+<img src="/preview" id="preview" />
+
+<hr />
+
+<small
+  >as always, made with 🖥 and ❤️ by <a href="https://breq.dev/">breq</a>.</small
+>
 
 <script src="/static/index.js" type="module"></script>
 {% endblock %}
