@@ -12,7 +12,7 @@ from wallmatrix.sources import Source
 
 api_key = os.environ["OPENWEATHERMAP_KEY"]
 base_url = "https://api.openweathermap.org/data/2.5/weather?"
-zip_code = os.getenv("ZIP_CODE") or "04074"
+zip_code = os.getenv("ZIP_CODE") or "02120"
 
 url = base_url + "appid=" + api_key + "&zip=" + zip_code
 
@@ -20,7 +20,7 @@ icon_path = Path(__file__).parent / "icons"
 
 
 def k_to_f(k):
-    return (k - 273.15) * 9/5 + 32
+    return (k - 273.15) * 9 / 5 + 32
 
 
 class Weather(Source):
@@ -48,7 +48,7 @@ class Weather(Source):
         "snow_moon": [],
         "snow_sun": [600, 601, 611, 612, 620],
         "sun": [800],
-        "wind": [771, 781]
+        "wind": [771, 781],
     }
 
     NIGHTTIME = {
@@ -73,7 +73,7 @@ class Weather(Source):
         "snow_moon": [600, 601, 611, 612, 620],
         "snow_sun": [],
         "sun": [],
-        "wind": [771, 781]
+        "wind": [771, 781],
     }
 
     def get_icon(self, code, daytime=True):
@@ -93,7 +93,7 @@ class Weather(Source):
 
         icon_code = data["weather"][0]["icon"]
 
-        is_daytime = (icon_code[-1] == "d")
+        is_daytime = icon_code[-1] == "d"
         icon_name = self.get_icon(data["weather"][0]["id"], is_daytime)
 
         icon = Image.open(icon_path / f"{icon_name}.png")
@@ -132,5 +132,6 @@ class Weather(Source):
         canvas = ImageEnhance.Brightness(canvas).enhance(0.5)
 
         return canvas
+
 
 __matrix_source__ = Weather

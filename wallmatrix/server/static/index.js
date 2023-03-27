@@ -53,5 +53,5 @@ flashButton.addEventListener("click", handleFlashMessage);
 setInterval(() => {
   const preview = document.getElementById("preview");
 
-  preview.src = `/preview?t=${new Date().getTime()}}`;
+  preview.src = `/preview?t=${new Date().getTime()}`;
 }, 500);

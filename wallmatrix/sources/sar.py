@@ -4,10 +4,11 @@ from wallmatrix.fonts import font, small_font
 
 from wallmatrix.sources import Source
 
-class Sar(Source):
-    SOURCE_NAME = "Days Until SAR"
 
-    SAR_DATE = datetime.date(2022, 3, 4)
+class Sar(Source):
+    SOURCE_NAME = "Days Until Utah"
+
+    SAR_DATE = datetime.date(2023, 5, 29)
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
