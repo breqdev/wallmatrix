@@ -71,7 +71,7 @@ class MBTA(Source):
         if wait_time >= max_wait:
             return "N/A"
 
-        minutes = int(wait_time / datetime.timedelta(minutes=1))
+        minutes = int(wait_time / datetime.timedelta(minutes=1)) - line["walk-min"]
 
         return minutes
 
