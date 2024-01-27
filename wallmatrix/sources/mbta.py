@@ -26,7 +26,7 @@ class MBTA(Source):
             "color": "ED8B00",
             "line": "line-Orange",
             "route": "Orange",
-            "origin": "place-rugg",  # Ruggles
+            "origin": "place-masta",  # Mass Ave
             "destination": "place-haecl",  # Haymarket
             "direction": 1,  # North
             "walk_min": 6,
@@ -34,8 +34,8 @@ class MBTA(Source):
         {
             "color": "00843D",
             "line": "line-Green",
-            "route": "Green-E",
-            "origin": "place-nuniv",  # NEU
+            "route": "Green-B,Green-C,Green-D",
+            "origin": "place-hymnl",  # Hynes Convention Center
             "destination": "place-haecl",  # Haymarket
             "direction": 1,  # East
             "walk_min": 10,
