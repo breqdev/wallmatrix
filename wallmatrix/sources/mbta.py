@@ -1,3 +1,4 @@
+from typing_extensions import Literal, TypedDict
 import requests
 import datetime
 
@@ -7,10 +8,20 @@ from wallmatrix.fonts import font, small_font
 from wallmatrix.sources import Source
 
 
+class Line(TypedDict):
+    color: str
+    line: str
+    route: str
+    origin: str
+    destination: str
+    direction: int
+    walk_min: int
+
+
 class MBTA(Source):
     SOURCE_NAME = "MBTA North from NEU"
 
-    LINES = [
+    LINES: list[Line] = [
         {
             "color": "ED8B00",
             "line": "line-Orange",
@@ -18,7 +29,7 @@ class MBTA(Source):
             "origin": "place-rugg",  # Ruggles
             "destination": "place-haecl",  # Haymarket
             "direction": 1,  # North
-            "walk-min": 6,
+            "walk_min": 6,
         },
         {
             "color": "00843D",
@@ -27,11 +38,11 @@ class MBTA(Source):
             "origin": "place-nuniv",  # NEU
             "destination": "place-haecl",  # Haymarket
             "direction": 1,  # East
-            "walk-min": 10,
+            "walk_min": 10,
         },
     ]
 
-    def get_wait_time(self, line):
+    def get_wait_time(self, line: Line) -> int | Literal["N/A"]:
         resp = requests.get(
             "https://api-v3.mbta.com/predictions",
             params={
@@ -46,8 +57,6 @@ class MBTA(Source):
 
         predictions = resp["data"]
 
-        soonest_valid = None
-
         current_time = datetime.datetime.now()
 
         for prediction in predictions:
@@ -58,24 +67,22 @@ class MBTA(Source):
             departure_time = departure_time.replace(tzinfo=None)
             wait_time = departure_time - current_time
 
-            if wait_time < datetime.timedelta(minutes=line["walk-min"]):
+            if wait_time < datetime.timedelta(minutes=line["walk_min"]):
                 continue
-
-            soonest_valid = prediction
-            break
-
-        if not soonest_valid:
+            else:
+                break
+        else:
             return "N/A"
 
         max_wait = datetime.timedelta(hours=1)
         if wait_time >= max_wait:
             return "N/A"
 
-        minutes = int(wait_time / datetime.timedelta(minutes=1)) - line["walk-min"]
+        minutes = int(wait_time / datetime.timedelta(minutes=1)) - line["walk_min"]
 
         return minutes
 
-    def draw_line(self, line):
+    def draw_line(self, line: Line):
         wait_time = self.get_wait_time(line)
 
         canvas = Image.new("RGB", (32, 8))
@@ -102,7 +109,7 @@ class MBTA(Source):
 
         return canvas
 
-    def get_data(self):
+    def get_data(self) -> Image.Image:
         canvas = Image.new("RGB", (32, 16))
 
         for i, line in enumerate(self.LINES):
@@ -111,7 +118,7 @@ class MBTA(Source):
 
         return canvas
 
-    def get_image(self, data):
+    def get_image(self, data: Image.Image) -> Image.Image:
         # We cache the entire canvas
         return data
 

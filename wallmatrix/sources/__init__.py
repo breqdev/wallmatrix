@@ -1,7 +1,12 @@
+from abc import ABC, abstractmethod
 import time
+from typing import Generic, TypeVar
+from PIL.Image import Image
+
+T = TypeVar("T")
 
 
-class Source:
+class Source(ABC, Generic[T]):
     CACHE_TTL = 60
 
     def __init__(self):
@@ -16,18 +21,18 @@ class Source:
         "Tear down any lasting objects required by the source."
         pass
 
-    def get_data(self):
+    @abstractmethod
+    def get_data(self) -> T:
         """Return the data required by the source.
         Will be called once every minute.
         Useful to avoid hitting API quotas."""
-        pass
 
-    def get_image(self, data):
+    @abstractmethod
+    def get_image(self, data: T | None) -> Image:
         """Return an image to display on the screen.
         Called once every second."""
-        pass
 
-    def get_data_and_image(self):
+    def get_data_and_image(self) -> Image:
         if time.time() - self.data_cache_time > self.CACHE_TTL:
             self.data_cache = self.get_data()
             self.data_cache_time = time.time()
