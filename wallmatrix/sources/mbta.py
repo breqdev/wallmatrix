@@ -8,7 +8,7 @@ from wallmatrix.fonts import font, small_font
 from wallmatrix.sources import Source
 
 
-class Line(TypedDict):
+class TransitLine(TypedDict):
     color: str
     line: str
     route: str
@@ -21,7 +21,7 @@ class Line(TypedDict):
 class MBTA(Source):
     SOURCE_NAME = "MBTA North from NEU"
 
-    LINES: list[Line] = [
+    LINES: list[TransitLine] = [
         {
             "color": "ED8B00",
             "line": "line-Orange",
@@ -42,7 +42,7 @@ class MBTA(Source):
         },
     ]
 
-    def get_wait_time(self, line: Line) -> int | Literal["N/A"]:
+    def get_wait_time(self, line: TransitLine) -> int | Literal["N/A"]:
         resp = requests.get(
             "https://api-v3.mbta.com/predictions",
             params={
@@ -82,7 +82,7 @@ class MBTA(Source):
 
         return minutes
 
-    def draw_line(self, line: Line):
+    def draw_line(self, line: TransitLine):
         wait_time = self.get_wait_time(line)
 
         canvas = Image.new("RGB", (32, 8))

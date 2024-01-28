@@ -10,7 +10,7 @@ class Source(ABC, Generic[T]):
     CACHE_TTL = 60
 
     def __init__(self):
-        self.data_cache = None
+        self.data_cache = self.get_data()
         self.data_cache_time = 0
 
     def setup(self):
@@ -28,7 +28,7 @@ class Source(ABC, Generic[T]):
         Useful to avoid hitting API quotas."""
 
     @abstractmethod
-    def get_image(self, data: T | None) -> Image:
+    def get_image(self, data: T) -> Image:
         """Return an image to display on the screen.
         Called once every second."""
 
