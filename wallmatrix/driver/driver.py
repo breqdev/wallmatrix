@@ -5,6 +5,7 @@ import traceback
 import queue
 import dataclasses
 from pathlib import Path
+from typing import Optional
 
 from PIL import Image, ImageDraw
 
@@ -16,8 +17,8 @@ import wallmatrix
 @dataclasses.dataclass
 class DriverEvent:
     action: str
-    source: str | None = None
-    message: str | None = None
+    source: Optional[str] = None
+    message: Optional[str] = None
 
 
 class MatrixDriver:
