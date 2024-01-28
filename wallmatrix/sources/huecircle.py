@@ -9,7 +9,8 @@ class HueCircle(Source):
     SOURCE_NAME = "Hue Circle"
     CACHE_TTL = 5
 
-    def setup(self):
+    def __init__(self):
+        super().__init__()
         self.hue = 0
 
     def get_data(self):

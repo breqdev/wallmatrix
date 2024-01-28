@@ -8,7 +8,8 @@ from wallmatrix.driver.driver import MatrixDriver
 
 
 class RealMatrixDriver(MatrixDriver):
-    def setup(self):
+    def __init__(self):
+        super().__init__()
         self.options = RGBMatrixOptions()
         self.options.rows = 16
         self.options.drop_privileges = False

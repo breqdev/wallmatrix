@@ -13,10 +13,6 @@ class Source(ABC, Generic[T]):
         self.data_cache = self.get_data()
         self.data_cache_time = 0
 
-    def setup(self):
-        "Set up any lasting objects required by the source."
-        pass
-
     def teardown(self):
         "Tear down any lasting objects required by the source."
         pass

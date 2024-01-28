@@ -21,7 +21,8 @@ class WorldClock(Source):
         ["PEK", "Asia/Shanghai", (255, 0, 255)],
     ]
 
-    def setup(self):
+    def __init__(self):
+        super().__init__()
         self.incr = 0
 
     def get_image(self, data):

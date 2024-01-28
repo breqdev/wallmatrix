@@ -63,8 +63,6 @@ class MatrixDriver:
 
                 self.sources[import_name] = source
 
-                source.setup()
-
     def refresh(self):
         self.last_refresh = time.time()
 
