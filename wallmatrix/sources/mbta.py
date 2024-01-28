@@ -55,6 +55,8 @@ class MBTA(Source):
 
         for prediction in predictions:
             departure_time = prediction["attributes"]["departure_time"]
+            if departure_time is None:
+                continue
             departure_time = datetime.datetime.strptime(
                 departure_time, "%Y-%m-%dT%H:%M:%S%z"
             )

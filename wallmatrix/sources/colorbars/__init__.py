@@ -11,6 +11,9 @@ class Colorbars(Source):
         super().__init__()
         self.bars = Image.open(Path(__file__).parent / "colorbars.png")
 
+    def get_data(self):
+        pass
+
     def get_image(self, data):
         return self.bars
 

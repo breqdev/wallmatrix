@@ -10,8 +10,8 @@ class HueCircle(Source):
     CACHE_TTL = 5
 
     def __init__(self):
-        super().__init__()
         self.hue = 0
+        super().__init__()
 
     def get_data(self):
         self.hue += 5
