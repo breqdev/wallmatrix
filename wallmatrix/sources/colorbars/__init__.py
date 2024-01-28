@@ -7,8 +7,12 @@ from wallmatrix.sources import Source
 class Colorbars(Source):
     SOURCE_NAME = "Color Bar Test Pattern"
 
-    def setup(self):
+    def __init__(self):
+        super().__init__()
         self.bars = Image.open(Path(__file__).parent / "colorbars.png")
+
+    def get_data(self):
+        pass
 
     def get_image(self, data):
         return self.bars

@@ -9,6 +9,9 @@ class Sar(Source):
     SOURCE_NAME = "Days Until SAR"
 
     SAR_DATE = datetime.date(2024, 3, 1)
+    
+    def get_data(self):
+        pass
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))

@@ -1,3 +1,4 @@
+from typing_extensions import Literal, TypedDict
 import requests
 import datetime
 
@@ -7,31 +8,35 @@ from wallmatrix.fonts import font, small_font
 from wallmatrix.sources import Source
 
 
+class TransitLine(TypedDict):
+    color: str
+    route: str
+    origin: str
+    direction: int
+    walk_min: int
+
+
 class MBTA(Source):
     SOURCE_NAME = "MBTA North from NEU"
 
-    LINES = [
-        {
-            "color": "ED8B00",
-            "line": "line-Orange",
-            "route": "Orange",
-            "origin": "place-rugg",  # Ruggles
-            "destination": "place-haecl",  # Haymarket
-            "direction": 1,  # North
-            "walk-min": 6,
-        },
+    LINES: list[TransitLine] = [
         {
             "color": "00843D",
-            "line": "line-Green",
-            "route": "Green-E",
-            "origin": "place-nuniv",  # NEU
-            "destination": "place-haecl",  # Haymarket
+            "route": "Green-B,Green-C,Green-D",
+            "origin": "place-hymnl",  # Hynes Convention Center
             "direction": 1,  # East
-            "walk-min": 10,
+            "walk_min": 6,
+        },
+        {
+            "color": "FFC72C",
+            "route": "1",
+            "origin": "93",  # Mass Ave
+            "direction": 0,  # North
+            "walk_min": 6,
         },
     ]
 
-    def get_wait_time(self, line):
+    def get_wait_time(self, line: TransitLine) -> int | Literal["N/A"]:
         resp = requests.get(
             "https://api-v3.mbta.com/predictions",
             params={
@@ -46,36 +51,34 @@ class MBTA(Source):
 
         predictions = resp["data"]
 
-        soonest_valid = None
-
         current_time = datetime.datetime.now()
 
         for prediction in predictions:
             departure_time = prediction["attributes"]["departure_time"]
+            if departure_time is None:
+                continue
             departure_time = datetime.datetime.strptime(
                 departure_time, "%Y-%m-%dT%H:%M:%S%z"
             )
             departure_time = departure_time.replace(tzinfo=None)
             wait_time = departure_time - current_time
 
-            if wait_time < datetime.timedelta(minutes=line["walk-min"]):
+            if wait_time < datetime.timedelta(minutes=line["walk_min"]):
                 continue
-
-            soonest_valid = prediction
-            break
-
-        if not soonest_valid:
+            else:
+                break
+        else:
             return "N/A"
 
         max_wait = datetime.timedelta(hours=1)
         if wait_time >= max_wait:
             return "N/A"
 
-        minutes = int(wait_time / datetime.timedelta(minutes=1)) - line["walk-min"]
+        minutes = int(wait_time / datetime.timedelta(minutes=1)) - line["walk_min"]
 
         return minutes
 
-    def draw_line(self, line):
+    def draw_line(self, line: TransitLine):
         wait_time = self.get_wait_time(line)
 
         canvas = Image.new("RGB", (32, 8))
@@ -90,6 +93,8 @@ class MBTA(Source):
 
         # Display the time remaining
         draw.text((9, 1), str(wait_time), font=font, fill="#" + line["color"])
+        if wait_time == "N/A":
+            return canvas
 
         # Draw the M manually (it's extra wide)
         draw.rectangle((19, 3, 22, 3), fill="#" + line["color"])
@@ -102,7 +107,7 @@ class MBTA(Source):
 
         return canvas
 
-    def get_data(self):
+    def get_data(self) -> Image.Image:
         canvas = Image.new("RGB", (32, 16))
 
         for i, line in enumerate(self.LINES):
@@ -111,7 +116,7 @@ class MBTA(Source):
 
         return canvas
 
-    def get_image(self, data):
+    def get_image(self, data: Image.Image) -> Image.Image:
         # We cache the entire canvas
         return data
 

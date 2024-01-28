@@ -32,9 +32,6 @@ class MatrixDriver:
         self.message_queue = queue.Queue()
         self.last_refresh = 0
 
-    def setup(self):
-        pass
-
     def load_sources(self):
         source_path = Path(wallmatrix.__file__).parent / "sources"
 
@@ -62,8 +59,6 @@ class MatrixDriver:
                 source = source()
 
                 self.sources[import_name] = source
-
-                source.setup()
 
     def refresh(self):
         self.last_refresh = time.time()
