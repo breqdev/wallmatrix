@@ -93,6 +93,8 @@ class MBTA(Source):
 
         # Display the time remaining
         draw.text((9, 1), str(wait_time), font=font, fill="#" + line["color"])
+        if wait_time == "N/A":
+            return canvas
 
         # Draw the M manually (it's extra wide)
         draw.rectangle((19, 3, 22, 3), fill="#" + line["color"])
