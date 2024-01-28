@@ -88,8 +88,8 @@ class MBTA(Source):
         draw.ellipse((0, 0, 7, 7), outline="#" + line["color"])
 
         # Draw the T
-        draw.rectangle((2, 3, 4, 3), fill=(196, 196, 196))
-        draw.rectangle((3, 4, 3, 5), fill=(196, 196, 196))
+        draw.rectangle((2, 2, 5, 3), fill=(196, 196, 196))
+        draw.rectangle((3, 4, 4, 5), fill=(196, 196, 196))
 
         # Display the time remaining
         draw.text((9, 1), str(wait_time), font=font, fill="#" + line["color"])
