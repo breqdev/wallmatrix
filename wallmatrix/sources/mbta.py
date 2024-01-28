@@ -10,10 +10,8 @@ from wallmatrix.sources import Source
 
 class TransitLine(TypedDict):
     color: str
-    line: str
     route: str
     origin: str
-    destination: str
     direction: int
     walk_min: int
 
@@ -23,22 +21,18 @@ class MBTA(Source):
 
     LINES: list[TransitLine] = [
         {
-            "color": "ED8B00",
-            "line": "line-Orange",
-            "route": "Orange",
-            "origin": "place-masta",  # Mass Ave
-            "destination": "place-haecl",  # Haymarket
-            "direction": 1,  # North
+            "color": "00843D",
+            "route": "Green-B,Green-C,Green-D",
+            "origin": "place-hymnl",  # Hynes Convention Center
+            "direction": 1,  # East
             "walk_min": 6,
         },
         {
-            "color": "00843D",
-            "line": "line-Green",
-            "route": "Green-B,Green-C,Green-D",
-            "origin": "place-hymnl",  # Hynes Convention Center
-            "destination": "place-haecl",  # Haymarket
-            "direction": 1,  # East
-            "walk_min": 10,
+            "color": "FFC72C",
+            "route": "1",
+            "origin": "93",  # Mass Ave
+            "direction": 0,  # North
+            "walk_min": 6,
         },
     ]
 
