@@ -24,6 +24,9 @@ class WorldClock(Source):
     def __init__(self):
         super().__init__()
         self.incr = 0
+        
+    def get_data(self):
+        pass
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))

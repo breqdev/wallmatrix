@@ -12,7 +12,6 @@ from wallmatrix.driver.default import Driver
 
 
 driver = Driver()
-driver.setup()
 
 app = Flask(__name__)
 
