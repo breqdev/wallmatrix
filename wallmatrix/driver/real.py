@@ -2,7 +2,7 @@ import os
 
 from PIL import Image
 
-from rgbmatrix import RGBMatrix, RGBMatrixOptions
+from rgbmatrix import RGBMatrix, RGBMatrixOptions  # type: ignore
 
 from wallmatrix.driver.driver import MatrixDriver
 

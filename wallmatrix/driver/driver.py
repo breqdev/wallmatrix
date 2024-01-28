@@ -16,8 +16,8 @@ import wallmatrix
 @dataclasses.dataclass
 class DriverEvent:
     action: str
-    source: str = None
-    message: str = None
+    source: str | None = None
+    message: str | None = None
 
 
 class MatrixDriver:
@@ -49,8 +49,7 @@ class MatrixDriver:
 
             if child.is_file():
                 if child.name.endswith(".py"):
-                    import_name = (
-                        "wallmatrix.sources." + child.name[:-len(".py")])
+                    import_name = "wallmatrix.sources." + child.name[: -len(".py")]
 
             if not import_name:
                 continue

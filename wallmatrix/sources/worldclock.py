@@ -1,8 +1,9 @@
 import datetime
+
 try:
     import zoneinfo
 except ImportError:
-    from backports import zoneinfo
+    from backports import zoneinfo  # type: ignore
 
 from PIL import Image, ImageDraw
 
@@ -32,7 +33,7 @@ class WorldClock(Source):
         DATE_COLOR = (255, 128, 0)
 
         month = local_time.strftime("%m")
-        if (month[0] == "1"):
+        if month[0] == "1":
             draw.line((0, 1, 0, 5), fill=DATE_COLOR)
         draw.text((2, 1), month[1:], font=small_font, fill=DATE_COLOR)
 
@@ -56,5 +57,6 @@ class WorldClock(Source):
         draw.text((16, 9), zone_str, font=small_font, fill=color)
 
         return canvas
+
 
 __matrix_source__ = WorldClock
