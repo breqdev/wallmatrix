@@ -1,6 +1,0 @@
-python-dotenv
-flask
-pillow
-requests
-types-requests
-types-pillow

@@ -1,0 +1,10 @@
+[project]
+version = "1.0.0"
+name = "wallmatrix"
+requires-python = ">= 3.9"
+readme = "README.md"
+
+dependencies = ["python-dotenv", "flask", "pillow", "requests"]
+
+[project.optional-dependencies]
+dev = ["types-pillow", "types-requests"]
