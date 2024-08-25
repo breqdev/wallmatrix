@@ -54,8 +54,8 @@ class MBTA(Source):
                 "include": "stop",
                 "sort": "arrival_time",
                 "page[limit]": "10",
+                "api_key": os.environ["MBTA_TOKEN"],
             },
-            headers={"Authorization": f"Bearer {os.environ['MBTA_TOKEN']}"},
         )
 
         predictions_response.raise_for_status()
@@ -94,8 +94,8 @@ class MBTA(Source):
                 "filter[date]": service_date.strftime("%Y-%m-%d"),
                 "filter[min_time]": f"{service_hour:02}:{service_minute:02}",
                 "filter[max_time]": f"{service_hour+2:02}:{service_minute:02}",
+                "api_key": os.environ["MBTA_TOKEN"],
             },
-            headers={"Authorization": f"Bearer {os.environ['MBTA_TOKEN']}"},
         )
 
         schedule_response.raise_for_status()
