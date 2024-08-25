@@ -96,7 +96,7 @@ class Weather(Source):
         icon_name = self.get_icon(data["weather"][0]["id"], is_daytime)
 
         icon = Image.open(icon_path / f"{icon_name}.png")
-        icon.thumbnail((16, 16), Image.ANTIALIAS)
+        icon.thumbnail((16, 16), Image.LANCZOS)
 
         canvas.paste(icon, (-1, 0))
 
