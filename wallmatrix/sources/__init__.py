@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import time
 from typing import Generic, TypeVar
 from PIL.Image import Image
+from PIL.ImageEnhance import Brightness
 
 T = TypeVar("T")
 
@@ -33,4 +34,5 @@ class Source(ABC, Generic[T]):
             self.data_cache = self.get_data()
             self.data_cache_time = time.time()
 
-        return self.get_image(self.data_cache)
+        image = self.get_image(self.data_cache)
+        return Brightness(image).enhance(0.5)
