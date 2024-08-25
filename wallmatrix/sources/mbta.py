@@ -24,16 +24,16 @@ class MBTA(Source):
         {
             "color": "00843D",
             "route": "Green-B,Green-C,Green-D",
-            "origin": "place-hymnl",  # Hynes Convention Center
-            "direction": 1,  # East
-            "walk_min": 6,
+            "origin": "place-mgngl",  # Magoun Square
+            "direction": 0,  # West
+            "walk_min": 7,
         },
         {
             "color": "FFC72C",
-            "route": "1",
-            "origin": "93",  # Mass Ave
+            "route": "89",
+            "origin": "2698",  # Broadway @ Cedar St
             "direction": 0,  # North
-            "walk_min": 6,
+            "walk_min": 4,
         },
     ]
 
