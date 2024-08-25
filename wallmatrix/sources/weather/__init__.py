@@ -88,7 +88,9 @@ class Weather(Source[dict[str, Any]]):
                 return icon
 
     def get_data(self):
-        return requests.get(url).json()
+        resp = requests.get(url)
+        resp.raise_for_status()
+        return resp.json()
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
