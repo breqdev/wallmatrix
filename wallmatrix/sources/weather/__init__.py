@@ -11,7 +11,7 @@ from wallmatrix.sources import Source
 
 api_key = os.environ["OPENWEATHERMAP_KEY"]
 base_url = "https://api.openweathermap.org/data/2.5/weather?"
-zip_code = os.getenv("ZIP_CODE") or "02120"
+zip_code = os.getenv("ZIP_CODE", "02145")
 
 url = base_url + "appid=" + api_key + "&zip=" + zip_code
 
@@ -25,7 +25,7 @@ def k_to_f(k):
 class Weather(Source):
     SOURCE_NAME = "Local Weather Conditions"
 
-    DAYTIME = {
+    DAYTIME: dict[str, list[int]] = {
         "cloud": [803],
         "cloud_moon": [],
         "cloud_sun": [801, 802],
@@ -50,7 +50,7 @@ class Weather(Source):
         "wind": [771, 781],
     }
 
-    NIGHTTIME = {
+    NIGHTTIME: dict[str, list[int]] = {
         "cloud": [803],
         "cloud_moon": [801, 802],
         "cloud_sun": [],
@@ -75,7 +75,7 @@ class Weather(Source):
         "wind": [771, 781],
     }
 
-    def get_icon(self, code, daytime=True):
+    def get_icon(self, code: int, daytime: bool = True):
         mapping = self.DAYTIME if daytime else self.NIGHTTIME
 
         for icon, codes in mapping.items():
