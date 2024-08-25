@@ -29,7 +29,7 @@ class MBTA(Source):
             "direction": 0,  # West
         },
         {
-            "color": "FFC72C",
+            "color": "b88f1f",  # darker version of FFC72C
             "route": "89",
             "origin": "2698",  # Broadway @ Cedar St
             "direction": 1,  # towards Sullivan
@@ -191,8 +191,8 @@ class MBTA(Source):
         draw.ellipse((0, 0, 7, 7), outline="#" + line["color"])
 
         # Draw the T
-        draw.rectangle((2, 2, 5, 3), fill=(196, 196, 196))
-        draw.rectangle((3, 4, 4, 5), fill=(196, 196, 196))
+        draw.rectangle((2, 2, 5, 3), fill=(128, 128, 128))
+        draw.rectangle((3, 4, 4, 5), fill=(128, 128, 128))
 
         # Display the time remaining
         x = 9
@@ -209,7 +209,7 @@ class MBTA(Source):
             if (x + length) > 32:
                 return canvas
 
-            draw.text((x, 1), item, font=font, fill=(196, 196, 196))
+            draw.text((x, 1), item, font=font, fill=(128, 128, 128))
             x += length + 3
 
         return canvas
