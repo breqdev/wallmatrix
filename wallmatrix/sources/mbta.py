@@ -169,7 +169,7 @@ class MBTA(Source):
             scheduled_times.append(wait_time)
 
         if len(realtime_times) + len(scheduled_times) == 0:
-            return ("N/A", "")
+            return ["N/A"], [""]
 
         realtime_text = [
             str(int(time / datetime.timedelta(minutes=1))) for time in realtime_times
@@ -179,7 +179,7 @@ class MBTA(Source):
             str(int(time / datetime.timedelta(minutes=1))) for time in scheduled_times
         ]
 
-        return [realtime_text, scheduled_text]
+        return realtime_text, scheduled_text
 
     def draw_line(self, line: TransitLine):
         realtime, scheduled = self.get_time_text(line)

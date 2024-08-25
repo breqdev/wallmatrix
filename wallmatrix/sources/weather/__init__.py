@@ -1,4 +1,5 @@
 import os
+from typing import Any
 import requests
 import datetime
 
@@ -18,11 +19,15 @@ url = base_url + "appid=" + api_key + "&zip=" + zip_code
 icon_path = Path(__file__).parent / "icons"
 
 
-def k_to_f(k):
+def k_to_f(k: float) -> float:
     return (k - 273.15) * 9 / 5 + 32
 
 
-class Weather(Source):
+def k_to_c(k: float) -> float:
+    return k - 273.15
+
+
+class Weather(Source[dict[str, Any]]):
     SOURCE_NAME = "Local Weather Conditions"
 
     DAYTIME: dict[str, list[int]] = {
@@ -87,8 +92,9 @@ class Weather(Source):
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
-
-        temperature = int(k_to_f(data["main"]["temp"]))
+        temp: float = data["main"]["temp"]
+        temp_f = int(k_to_f(temp))
+        temp_c = int(k_to_c(temp))
 
         icon_code = data["weather"][0]["icon"]
 
@@ -101,7 +107,7 @@ class Weather(Source):
         canvas.paste(icon, (-1, 0))
 
         draw = ImageDraw.Draw(canvas)
-        draw.text((16, 1), f"{temperature}°", font=font, fill=(255, 255, 255))
+        draw.text((16, 1), f"{temp_f}°", font=font, fill=(255, 255, 255))
 
         now = datetime.datetime.now()
 
