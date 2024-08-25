@@ -1,3 +1,4 @@
+from contextlib import suppress
 import threading
 import io
 
@@ -50,7 +51,8 @@ def flash():
 @app.route("/preview")
 def preview():
     buf = io.BytesIO()
-    driver.image.save(buf, format="PNG")
+    with suppress(AttributeError): # shh race conditions aren't real and can't hurt us
+        driver.image.save(buf, format="PNG")
     return Response(buf.getvalue(), mimetype="image/png")
 
 

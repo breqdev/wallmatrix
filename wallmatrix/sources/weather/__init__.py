@@ -109,32 +109,27 @@ class Weather(Source[dict[str, Any]]):
         canvas.paste(icon, (-1, 0))
 
         draw = ImageDraw.Draw(canvas)
-        draw.text((16, 1), f"{temp_f}°", font=font, fill=(255, 255, 255))
+        draw.text((15, 1), str(temp_f), font=small_font, fill=(255, 255, 255))
+        draw.line((23, 2, 23, 4), fill=(255, 255, 255))
+        draw.text((25, 1), str(temp_c), font=small_font, fill=(255, 255, 255))
 
         now = datetime.datetime.now()
 
-        hour_digit = now.hour % 12
-        if hour_digit == 0:
-            hour_digit = 12
+        hour = now.hour % 12
+        if hour == 0:
+            hour = 12
 
-        # Draw the first digit of the hour
-        # We draw the 1 manually and condense it a bit
-        # so that we can fit all the text
-        if hour_digit >= 10:
-            draw.line((16, 9, 16, 13), fill=(255, 255, 255))
-            draw.point((15, 10), fill=(255, 255, 255))
-
-        # Draw the last digit of the hour
-        draw.text((18, 9), str(hour_digit)[-1], font=small_font, fill=(255, 255, 255))
+        # Draw the hour
+        draw.text((15, 9), f"{hour:>2}", font=small_font, fill=(255, 255, 255))
 
         # Draw the colon
-        draw.point((22, 10), fill=(255, 255, 255))
-        draw.point((22, 12), fill=(255, 255, 255))
+        draw.point((23, 10), fill=(255, 255, 255))
+        draw.point((23, 12), fill=(255, 255, 255))
 
         # Draw the minutes
         minutes = str(now.minute).zfill(2)
 
-        draw.text((24, 9), minutes, font=small_font, fill=(255, 255, 255))
+        draw.text((25, 9), minutes, font=small_font, fill=(255, 255, 255))
 
         canvas = ImageEnhance.Brightness(canvas).enhance(0.5)
 
