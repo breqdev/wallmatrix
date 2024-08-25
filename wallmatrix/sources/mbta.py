@@ -23,7 +23,7 @@ class MBTA(Source):
     LINES: list[TransitLine] = [
         {
             "color": "00843D",
-            "route": "Green-B,Green-C,Green-D",
+            "route": "Green-E",
             "origin": "place-mgngl",  # Magoun Square
             "direction": 0,  # West
             "walk_min": 7,
@@ -32,7 +32,7 @@ class MBTA(Source):
             "color": "FFC72C",
             "route": "89",
             "origin": "2698",  # Broadway @ Cedar St
-            "direction": 0,  # North
+            "direction": 1,  # towards Sullivan
             "walk_min": 4,
         },
     ]
