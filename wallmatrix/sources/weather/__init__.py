@@ -1,4 +1,5 @@
 import os
+from typing import Any
 import requests
 import datetime
 
@@ -11,21 +12,25 @@ from wallmatrix.sources import Source
 
 api_key = os.environ["OPENWEATHERMAP_KEY"]
 base_url = "https://api.openweathermap.org/data/2.5/weather?"
-zip_code = os.getenv("ZIP_CODE") or "02120"
+zip_code = os.getenv("ZIP_CODE", "02145")
 
 url = base_url + "appid=" + api_key + "&zip=" + zip_code
 
 icon_path = Path(__file__).parent / "icons"
 
 
-def k_to_f(k):
+def k_to_f(k: float) -> float:
     return (k - 273.15) * 9 / 5 + 32
 
 
-class Weather(Source):
+def k_to_c(k: float) -> float:
+    return k - 273.15
+
+
+class Weather(Source[dict[str, Any]]):
     SOURCE_NAME = "Local Weather Conditions"
 
-    DAYTIME = {
+    DAYTIME: dict[str, list[int]] = {
         "cloud": [803],
         "cloud_moon": [],
         "cloud_sun": [801, 802],
@@ -50,7 +55,7 @@ class Weather(Source):
         "wind": [771, 781],
     }
 
-    NIGHTTIME = {
+    NIGHTTIME: dict[str, list[int]] = {
         "cloud": [803],
         "cloud_moon": [801, 802],
         "cloud_sun": [],
@@ -75,7 +80,7 @@ class Weather(Source):
         "wind": [771, 781],
     }
 
-    def get_icon(self, code, daytime=True):
+    def get_icon(self, code: int, daytime: bool = True):
         mapping = self.DAYTIME if daytime else self.NIGHTTIME
 
         for icon, codes in mapping.items():
@@ -89,8 +94,9 @@ class Weather(Source):
 
     def get_image(self, data):
         canvas = Image.new("RGB", (32, 16))
-
-        temperature = int(k_to_f(data["main"]["temp"]))
+        temp: float = data["main"]["temp"]
+        temp_f = int(k_to_f(temp))
+        temp_c = int(k_to_c(temp))
 
         icon_code = data["weather"][0]["icon"]
 
@@ -103,32 +109,27 @@ class Weather(Source):
         canvas.paste(icon, (-1, 0))
 
         draw = ImageDraw.Draw(canvas)
-        draw.text((16, 1), f"{temperature}°", font=font, fill=(255, 255, 255))
+        draw.text((15, 1), str(temp_f), font=small_font, fill=(255, 255, 255))
+        draw.line((23, 2, 23, 4), fill=(255, 255, 255))
+        draw.text((25, 1), str(temp_c), font=small_font, fill=(255, 255, 255))
 
         now = datetime.datetime.now()
 
-        hour_digit = now.hour % 12
-        if hour_digit == 0:
-            hour_digit = 12
+        hour = now.hour % 12
+        if hour == 0:
+            hour = 12
 
-        # Draw the first digit of the hour
-        # We draw the 1 manually and condense it a bit
-        # so that we can fit all the text
-        if hour_digit >= 10:
-            draw.line((16, 9, 16, 13), fill=(255, 255, 255))
-            draw.point((15, 10), fill=(255, 255, 255))
-
-        # Draw the last digit of the hour
-        draw.text((18, 9), str(hour_digit)[-1], font=small_font, fill=(255, 255, 255))
+        # Draw the hour
+        draw.text((15, 9), f"{hour:>2}", font=small_font, fill=(255, 255, 255))
 
         # Draw the colon
-        draw.point((22, 10), fill=(255, 255, 255))
-        draw.point((22, 12), fill=(255, 255, 255))
+        draw.point((23, 10), fill=(255, 255, 255))
+        draw.point((23, 12), fill=(255, 255, 255))
 
         # Draw the minutes
         minutes = str(now.minute).zfill(2)
 
-        draw.text((24, 9), minutes, font=small_font, fill=(255, 255, 255))
+        draw.text((25, 9), minutes, font=small_font, fill=(255, 255, 255))
 
         canvas = ImageEnhance.Brightness(canvas).enhance(0.5)
 
